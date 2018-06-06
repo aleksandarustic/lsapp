@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -11,9 +12,32 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     // KORISTI SE ZA PRIKAZ SVIH POSTOVA IZ BAZE PODATAKA
     public function index()
     {
-        //
+        //SVI RADE ISTU STVAR
+        // $posts = Post::all();
+
+        // ZAPISATI PAGANIZACIJU 
+        /* 
+            Stvaranje paganizaiju
+
+            Post::orderBy('title','desc')->paginate(1);
+
+            Na query se dodaje funkcija paginate koja ima parametar koji oznacava broj redova po stranici 
+            Ne stavlja se get na kraju querija
+            
+            Zativ u view gde se prikazuju svi postovi bece prikazano broj redova koji je unet u paginate.
+            {{$posts->links()}}
+            - Stvara linkove ka stranicama za redove
+        
+
+        */
+
+        $posts = Post::orderBy('title','desc')->paginate(10);
+        // $posts = DB::select('SELECT * FROM posts ');
+        return view('posts.index')->with('posts',$posts);
     }
 
     /**
@@ -43,9 +67,12 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     // KORISTI SE ZA PRIKAZ POJEDINACNOG POSTA
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.show')->with('post',$post);
     }
 
     /**
