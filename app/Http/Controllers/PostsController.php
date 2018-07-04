@@ -63,11 +63,16 @@ class PostsController extends Controller
              'body'=> 'required'
           ]);
 
-      // Create post
+       // Create post
+
+        /*
+         * Ako se ukljuci autentifikaciju komadom , imamo mogucnost da koristimo funkcije za autentifikovanog usera auth()->user()->id
+         * */
 
        $post = new Post();
        $post->title = $request->input('title');
        $post->body = $request->input('body');
+       $post->user_id =auth()->user()->id;
        $post->save();
 
        return redirect('/posts')->with('success','Post Created');
@@ -97,7 +102,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.edit')->with('post',$post);
+
     }
 
     /**

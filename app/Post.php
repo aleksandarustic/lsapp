@@ -13,5 +13,9 @@ class Post extends Model
     //Table primary key
     public $primaryKey = 'id';
 
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
 
 }

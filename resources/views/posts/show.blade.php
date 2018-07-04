@@ -9,5 +9,7 @@
     <small>
        Writen on {{$post->created_at}}
     </small>
+    <hr>
+    <a href="/posts/{{$post->id}}/edit" class="btn-default btn">Edit</a>
 
 @endsection

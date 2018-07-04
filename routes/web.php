@@ -26,6 +26,7 @@ Route::get('/users/{id}/{name}',function($id,$name){
 });
 
 Route::resource('posts','PostsController');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');
