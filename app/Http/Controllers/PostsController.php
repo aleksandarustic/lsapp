@@ -116,8 +116,23 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $this->validate($request,[
+            'title' => 'required',
+            'body'=> 'required'
+         ]);
+
+      // Create post
+
+       /*
+        * Ako se ukljuci autentifikaciju komadom , imamo mogucnost da koristimo funkcije za autentifikovanog usera auth()->user()->id
+        * */
+
+      $post = Post::find($id);
+      $post->title = $request->input('title');
+      $post->body = $request->input('body');
+      $post->save();
+
+      return redirect('/posts')->with('success','Post Updated');    }
 
     /**
      * Remove the specified resource from storage.
@@ -127,6 +142,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/posts')->with('success','Post Removed');
     }
 }
